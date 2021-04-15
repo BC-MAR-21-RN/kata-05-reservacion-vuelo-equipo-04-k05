@@ -4,10 +4,10 @@ import CrossPlatformIcon from 'react-native-cross-platform-icons';
 import CreateReservationStyles from '../assets/styles/CreateReservationStyles';
 import ItemsMyFlights from './ItemsMyFlights';
 
-const DataReceived = item => {
+const DataReceived = ({navigation, item}) => {
   return (
     <View style={CreateReservationStyles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
         <CrossPlatformIcon name="arrow-back" size={45} color="white" outline />
       </TouchableOpacity>
 
@@ -21,6 +21,7 @@ const DataReceived = item => {
         title="Finish"
         color="rgba(74,144,226,1)"
         style={{borderRadius: 10}}
+        onPress={() => navigation.navigate('MyFlights')}
       />
     </View>
   );

@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, ScrollView, Text, TextInput, Button, Linking} from 'react-native';
+import {View, ScrollView, Text, TextInput, Button} from 'react-native';
 import RegisterStyles from '../assets/styles/RegisterStyles';
 
-const Login = () => {
+const Login = ({navigation}) => {
   return (
     <ScrollView style={RegisterStyles.container}>
       <View style={RegisterStyles.group}>
@@ -25,17 +25,22 @@ const Login = () => {
           Use 8 or more characters with a mix of letters, numbers, {'\n'}and
           symbols
         </Text>
-        
-        <Button title="Log in" style={RegisterStyles.btnSignUp} />
+        <Button
+          title="Log in"
+          style={RegisterStyles.btnSignUp}
+          onPress={() => navigation.navigate('MyFlights')}
+        />
         <Text style={RegisterStyles.lblOr}>or</Text>
-        <Button title="Log in with Google" style={RegisterStyles.btnSignUp} />
+        <Button
+          title="Log in with Google"
+          style={RegisterStyles.btnSignUp}
+          onPress={() => navigation.navigate('MyFlights')}
+        />
         <Text style={RegisterStyles.lblAlreadyAccount}>
-          Already have an account?{' '}
+          Don't have an account?{' '}
           <Text
             style={{color: 'blue'}}
-            onPress={() =>
-              Linking.openURL('https://www.google.com/accounts/Login?hl=es')
-            }>
+            onPress={() => navigation.navigate('Register')}>
             Sign Up
           </Text>
         </Text>

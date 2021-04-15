@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {View, ScrollView, Text, TextInput, Button, Linking} from 'react-native';
+import {View, ScrollView, Text, TextInput, Button} from 'react-native';
 import CheckBox from '@react-native-community/checkbox';
 import RegisterStyles from '../assets/styles/RegisterStyles';
 
-const Register = () => {
+const Register = ({navigation}) => {
   const [isSelectedAgree, setSelectionAgree] = useState(false);
   const [isSelectedSuscribe, setSelectionSuscribe] = useState(false);
   return (
@@ -50,16 +50,22 @@ const Register = () => {
             Subscribe for select product update
           </Text>
         </View>
-        <Button title="Sign Up" style={RegisterStyles.btnSignUp} />
+        <Button
+          title="Sign Up"
+          style={RegisterStyles.btnSignUp}
+          onPress={() => navigation.navigate('Login')}
+        />
         <Text style={RegisterStyles.lblOr}>or</Text>
-        <Button title="Sign Up with Google" style={RegisterStyles.btnSignUp} />
+        <Button
+          title="Sign Up with Google"
+          style={RegisterStyles.btnSignUp}
+          onPress={() => navigation.navigate('Login')}
+        />
         <Text style={RegisterStyles.lblAlreadyAccount}>
           Already have an account?{' '}
           <Text
             style={{color: 'blue'}}
-            onPress={() =>
-              Linking.openURL('https://www.google.com/accounts/Login?hl=es')
-            }>
+            onPress={() => navigation.navigate('Login')}>
             Log In
           </Text>
         </Text>

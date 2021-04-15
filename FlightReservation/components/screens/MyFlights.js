@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, FlatList, Text} from 'react-native';
+import {View, FlatList, Text, TouchableOpacity} from 'react-native';
 import CrossPlatformIcon from 'react-native-cross-platform-icons';
 import MyFlightsStyles from '../assets/styles/MyFlightsStyles';
 import ItemsMyFlights from './ItemsMyFlights';
 
 const DATA = [{id: 1}];
-const MyFlights = () => {
+const MyFlights = ({navigation, item}) => {
   return (
     <View style={[MyFlightsStyles.container, MyFlightsStyles.centerVertical]}>
       <Text style={MyFlightsStyles.lblTitle}>My flights</Text>
@@ -15,7 +15,9 @@ const MyFlights = () => {
         renderItem={({item}) => <ItemsMyFlights item={item} />}
         keyExtractor={item => item.id}
       />
-      <View style={MyFlightsStyles.centerHorizontal}>
+      <TouchableOpacity
+        style={MyFlightsStyles.centerHorizontal}
+        onPress={() => navigation.navigate('LocationOrigin')}>
         <CrossPlatformIcon
           name="add-circle"
           style={MyFlightsStyles.iconAdd}
@@ -23,7 +25,7 @@ const MyFlights = () => {
           color="rgba(74,144,226,1)"
           outline
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
