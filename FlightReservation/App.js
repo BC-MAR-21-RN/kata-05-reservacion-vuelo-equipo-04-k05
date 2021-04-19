@@ -1,58 +1,33 @@
 import React from 'react';
-import { View } from 'react-native';
-import firebase from '@react-native-firebase/database';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Register from './components/screens/Register';
+import Login from './components/screens/Login';
+import MyFlights from './components/screens/MyFlights';
+import LocationOrigin from './components/screens/LocationOrigin';
+import LocationDestination from './components/screens/LocationDestination';
+import DateFlight from './components/screens/DateFlight';
+import Passengers from './components/screens/Passengers';
+import DataReceived from './components/screens/DataReceived';
+
+const Stack = createStackNavigator();
 
 const App = () => {
-  // CREATE
-  firebase()
-  .ref('/user/4')
-  .set({
-    id: 3,
-    name: 'Bruce Wayne',
-    email: 'bruce@wayne.com',
-    password: 'Im.B4tm4n',
-    flights: [
-      {
-        id: 1,
-        originCity: 'Gotham',
-        originCountry: 'United State',
-        destinationCity: 'Washington',
-        destinationCountry: 'United State',
-        date: '2021-04-10',
-        passengers: 3
-      },
-      {
-        id: 2,
-        originCity: 'Washington',
-        originCountry: 'United State',
-        destinationCity: 'Gotham',
-        destinationCountry: 'United State',
-        date: '2021-04-10',
-        passengers: 3
-      }
-    ]
-  })
-  .then(() => console.log('Data set.'));
-
-  // SHOW
-  firebase().ref('/user/1').once('value').then(snapshot => {
-    console.log('User data: ', snapshot.val());
-  })
-
-  // UPDATE
-  firebase()
-  .ref('/user/1')
-  .update({
-    name: 'Lois Lane',
-    email: 'loislane@planetdaily.com.mx',
-  })
-  .then(() => console.log('Data updated.'));
-
-  // DELETE
-  firebase().ref('/user/0').remove();
-
   return (
-    <View></View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Register" screenOptions={{
+        headerShown: false
+      }}>
+        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="MyFlights" component={MyFlights} />
+        <Stack.Screen name="LocationOrigin" component={LocationOrigin} />
+        <Stack.Screen name="LocationDestination" component={LocationDestination} />
+        <Stack.Screen name="DateFlight" component={DateFlight} />
+        <Stack.Screen name="Passengers" component={Passengers} />
+        <Stack.Screen name="DataReceived" component={DataReceived} />
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
 
