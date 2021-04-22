@@ -1,5 +1,29 @@
-import {StyleSheet} from 'react-native';
-const MyFlightsStyles = StyleSheet.create({
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
+import AirplaneIcon from '../icons/AirplaneIcon';
+import FlightCity from '../components/FlightCity';
+
+export default function FlightScreen({item}) {
+  return (
+    <>
+      <View style={[styles.row, styles.spaceBetween]}>
+        <FlightCity city="BEG" country="Serbia" />
+        <View style={[styles.column, styles.centerVertical]}>
+          <AirplaneIcon />
+        </View>
+        <FlightCity city="AMS" country="Netherlands" />
+      </View>
+      <View style={styles.hr} />
+      <View style={[styles.row, styles.spaceBetween]}>
+        <Text style={styles.fontNormal}>September 3, 2020</Text>
+        <Text style={[styles.textRight, styles.fontNormal]}>2 passengers</Text>
+      </View>
+      <View style={styles.hr} />
+    </>
+  );
+}
+
+const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -49,5 +73,3 @@ const MyFlightsStyles = StyleSheet.create({
     marginVertical: 12,
   },
 });
-
-export default MyFlightsStyles;
