@@ -1,26 +1,37 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import FormButton from '../components/FormButton';
 import {AuthContext} from '../navigation/AuthProvider';
 import FlightScreen from './FlightScreen';
 import AddIcon from '../icons/AddIcon';
-
-const DATA = [{id: 1}];
+import database from '@react-native-firebase/database';
 
 export default function HomeScreen({navigation}) {
   const {user, logout} = useContext(AuthContext);
+  const [isData, setIsData] = useState([]);
+  database()
+    .ref('/users/' + user.uid)
+    .once('value')
+    .then(snapshot => {
+      if (snapshot.exists()) {
+        setIsData(snapshot.val());
+      } else {
+        setIsData([]);
+      }
+    });
+
   return (
     <View style={[styles.container, styles.centerVertical]}>
       <Text style={styles.lblTitle}>My flights</Text>
       <FlatList
         style={styles.marginTitle}
-        data={DATA}
+        data={isData}
         renderItem={({item}) => <FlightScreen item={item} />}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
       />
       <TouchableOpacity
         style={styles.centerHorizontal}
-        onPress={() => alert('Add new Flight')}>
+        onPress={() => alert('UserId: ' + isData.id)}>
         <AddIcon style={styles.iconAdd} />
       </TouchableOpacity>
       <View style={[styles.centerHorizontal]}>
