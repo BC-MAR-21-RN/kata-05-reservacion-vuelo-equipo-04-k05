@@ -20,6 +20,13 @@ export default function HomeScreen({navigation}) {
       }
     });
 
+  const onPress = () => {
+    navigation.navigate('LocOriginScreen', {
+      id: isData.id,
+      username: isData.username,
+      email: isData.email,
+    });
+  };
   return (
     <View style={[styles.container, styles.centerVertical]}>
       <Text style={styles.lblTitle}>My flights</Text>
@@ -29,9 +36,7 @@ export default function HomeScreen({navigation}) {
         renderItem={({item}) => <FlightScreen item={item} />}
         keyExtractor={item => item.id.toString()}
       />
-      <TouchableOpacity
-        style={styles.centerHorizontal}
-        onPress={() => alert('UserId: ' + isData.id)}>
+      <TouchableOpacity style={styles.centerHorizontal} onPress={onPress}>
         <AddIcon style={styles.iconAdd} />
       </TouchableOpacity>
       <View style={[styles.centerHorizontal]}>
