@@ -15,15 +15,17 @@ export default function PassenScreen({route, navigation}) {
     date,
     passenger,
   } = route.params;
+
+  var flight = database().ref().child('flights').push().key;
   var flightData = {
+    id: flight,
     origin: origin,
     destination: destination,
     date: date,
     passenger: passenger,
   };
-  var flight = database().ref().child('flights').push().key;
   var updates = {};
-  updates['/users/' + id + '/' + flight] = flightData;
+  updates['/users/' + id + '/flights/' + flight] = flightData;
   database().ref().update(updates);
 
   return (

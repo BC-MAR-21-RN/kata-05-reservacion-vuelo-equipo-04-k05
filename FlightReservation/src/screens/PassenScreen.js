@@ -43,9 +43,7 @@ export default function PassenScreen({route, navigation}) {
         <FlightScreen item={id} />
       </View>
 
-      <Text style={CreateReservationStyles.cuestion}>
-        How many passengers?
-      </Text>
+      <Text style={CreateReservationStyles.cuestion}>How many passengers?</Text>
 
       <View style={{alignItems: 'center'}}>
         <Picker

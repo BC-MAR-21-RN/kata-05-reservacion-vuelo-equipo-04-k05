@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {View, Text, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
 import FormButton from '../components/FormButton';
 import {AuthContext} from '../navigation/AuthProvider';
@@ -9,6 +9,7 @@ import database from '@react-native-firebase/database';
 export default function HomeScreen({navigation}) {
   const {user, logout} = useContext(AuthContext);
   const [isData, setIsData] = useState([]);
+  const [isFlight, setIsFlight] = useState([]);
   database()
     .ref('/users/' + user.uid)
     .once('value')
@@ -20,6 +21,23 @@ export default function HomeScreen({navigation}) {
       }
     });
 
+  useEffect(() => {
+    database()
+      .ref('/users/' + user.uid + '/flights')
+      .once('value')
+      .then(snapshot => {
+        const flights = [];
+        if (snapshot.exists()) {
+          snapshot.forEach(flight => {
+            const showFlight = flight.val();
+            showFlight.id = flight.id;
+            flights.push(showFlight);
+          });
+        }
+        setIsFlight(flights);
+      });
+  }, []);
+
   const onPress = () => {
     navigation.navigate('LocOriginScreen', {
       id: isData.id,
@@ -30,12 +48,16 @@ export default function HomeScreen({navigation}) {
   return (
     <View style={[styles.container, styles.centerVertical]}>
       <Text style={styles.lblTitle}>My flights</Text>
-      <FlatList
-        style={styles.marginTitle}
-        data={isData}
-        renderItem={({item}) => <FlightScreen item={item} />}
-        keyExtractor={item => item.id.toString()}
-      />
+      {isFlight && (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          style={styles.marginTitle}
+          data={isFlight}
+          //renderItem={renderEntity}
+          renderItem={({item}) => <FlightScreen item={item} />}
+          keyExtractor={item => item.id}
+        />
+      )}
       <TouchableOpacity style={styles.centerHorizontal} onPress={onPress}>
         <AddIcon style={styles.iconAdd} />
       </TouchableOpacity>

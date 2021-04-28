@@ -2,8 +2,12 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import AirplaneIcon from '../icons/AirplaneIcon';
 import FlightCity from '../components/FlightCity';
+import moment from 'moment';
 
 export default function FlightScreen({item}) {
+  const convertDate = () => {
+    return moment(item.date).format('MMM DD, YYYY');
+  };
   return (
     <>
       <View style={[styles.row, styles.spaceBetween]}>
@@ -15,8 +19,13 @@ export default function FlightScreen({item}) {
       </View>
       <View style={styles.hr} />
       <View style={[styles.row, styles.spaceBetween]}>
-        <Text style={styles.fontNormal}>September 3, 2020</Text>
-        <Text style={[styles.textRight, styles.fontNormal]}>2 passengers</Text>
+        <Text style={styles.fontNormal}>
+          {/* September 3, 2020 */}
+          {convertDate()}
+        </Text>
+        <Text style={[styles.textRight, styles.fontNormal]}>
+          {item.passenger} passengers
+        </Text>
       </View>
       <View style={styles.hr} />
     </>

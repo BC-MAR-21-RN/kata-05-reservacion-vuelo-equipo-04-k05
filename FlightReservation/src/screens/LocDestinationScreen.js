@@ -5,6 +5,17 @@ import FlightScreen from './FlightScreen';
 import FormButton from '../components/FormButton';
 import {Picker} from '@react-native-picker/picker';
 
+var cities = {
+  ny: 'Nueva York, USA',
+  was: 'Washington, USA',
+  ott: 'Ottawa, Canada',
+  tok: 'Tokio, Japan',
+  ber: 'Berlin, Germany',
+  lon: 'London, Kindom United',
+  mos: 'Moscú, Rusia',
+  mx: 'Mexico City, Mexico',
+};
+
 export default function LocDestinationScreen({route, navigation}) {
   const {id, username, email, origin} = route.params;
   const [selectedCity, setSelectedCity] = useState();
@@ -32,9 +43,9 @@ export default function LocDestinationScreen({route, navigation}) {
       <Picker
         selectedValue={selectedCity}
         onValueChange={(itemValue, itemIndex) => setSelectedCity(itemValue)}>
-        <Picker.Item label="Colima, México" value="col" />
-        <Picker.Item label="Ciudad de México, México" value="cdmx" />
-        <Picker.Item label="Guanajuato, México" value="gto" />
+        {Object.keys(cities).map(key => {
+          return <Picker.Item label={cities[key]} value={key} key={key} />; //if you have a bunch of keys value pair
+        })}
       </Picker>
       <FormButton buttonTitle="Next" onPress={onPress} />
     </View>
