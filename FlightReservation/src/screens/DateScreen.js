@@ -3,20 +3,22 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import CrossPlatformIcon from 'react-native-cross-platform-icons';
 import {Calendar} from 'react-native-calendars';
 import FlightScreen from './FlightScreen';
+import CreateReservationStyles from '../styles/CreateReservationStyles';
 import FormButton from '../components/FormButton';
 
 export default function DateScreen({route, navigation}) {
   const {id, username, email, origin, destination} = route.params;
   const [selected, setSelected] = useState('');
+  const item = {
+    id: id,
+    username: username,
+    email: email,
+    origin: origin,
+    destination: destination,
+    date: selected,
+  };
   const onPress = () => {
-    navigation.navigate('PassenScreen', {
-      id: id,
-      username: username,
-      email: email,
-      origin: origin,
-      destination: destination,
-      date: selected,
-    });
+    navigation.navigate('PassenScreen', item);
   };
   const onDayPress = day => {
     setSelected(day.dateString);
@@ -27,7 +29,7 @@ export default function DateScreen({route, navigation}) {
         <CrossPlatformIcon name="arrow-back" size={45} color="black" outline />
       </TouchableOpacity>
       <View>
-        <FlightScreen item={id} />
+        <FlightScreen item={item} screen={'DateScreen'} />
       </View>
       <Text style={CreateReservationStyles.cuestion}>Select Date</Text>
       <Calendar
@@ -45,15 +47,3 @@ export default function DateScreen({route, navigation}) {
     </View>
   );
 }
-
-const CreateReservationStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    marginHorizontal: 30,
-  },
-  cuestion: {
-    fontWeight: 'bold',
-    fontSize: 36,
-  },
-});

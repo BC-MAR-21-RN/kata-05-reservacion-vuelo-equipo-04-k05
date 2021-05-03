@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
+import {View, Text} from 'react-native';
 import CrossPlatformIcon from 'react-native-cross-platform-icons';
 import Picker from '@gregfrench/react-native-wheel-picker';
 import FlightScreen from './FlightScreen';
 import FormButton from '../components/FormButton';
+import CreateReservationStyles from '../styles/CreateReservationStyles';
 
 var PickerItem = Picker.Item;
 
@@ -22,16 +23,17 @@ export default function PassenScreen({route, navigation}) {
     '9',
     '10',
   ]);
+  const item = {
+    id: id,
+    username: username,
+    email: email,
+    origin: origin,
+    destination: destination,
+    date: date,
+    passenger: selectedItem,
+  };
   const onPress = () => {
-    navigation.navigate('SendDataScreen', {
-      id: id,
-      username: username,
-      email: email,
-      origin: origin,
-      destination: destination,
-      date: date,
-      passenger: selectedItem,
-    });
+    navigation.navigate('SendDataScreen', item);
   };
   return (
     <View style={CreateReservationStyles.container}>
@@ -40,19 +42,19 @@ export default function PassenScreen({route, navigation}) {
       </View>
 
       <View>
-        <FlightScreen item={id} />
+        <FlightScreen item={item} screen={'PassenScreen'} />
       </View>
 
       <Text style={CreateReservationStyles.cuestion}>How many passengers?</Text>
 
-      <View style={{alignItems: 'center'}}>
+      <View style={CreateReservationStyles.centerHorizontal}>
         <Picker
-          style={{width: 150, height: 180}}
+          style={CreateReservationStyles.pickerSize}
           lineColor="#000000" //to set top and bottom line color (Without gradients)
           lineGradientColorFrom="#008000" //to set top and bottom starting gradient line color
           lineGradientColorTo="#FF5733" //to set top and bottom ending gradient
           selectedValue={selectedItem}
-          itemStyle={{color: 'black', fontSize: 26}}
+          itemStyle={CreateReservationStyles.pickerFont}
           onValueChange={index => setSelectedItem(index)}>
           {itemList.map((value, i) => (
             <PickerItem label={value} value={i} key={i} />
@@ -63,15 +65,3 @@ export default function PassenScreen({route, navigation}) {
     </View>
   );
 }
-
-const CreateReservationStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    marginHorizontal: 30,
-  },
-  cuestion: {
-    fontWeight: 'bold',
-    fontSize: 36,
-  },
-});

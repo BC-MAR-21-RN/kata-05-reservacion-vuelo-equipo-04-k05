@@ -54,7 +54,9 @@ export default function HomeScreen({navigation}) {
           style={styles.marginTitle}
           data={isFlight}
           //renderItem={renderEntity}
-          renderItem={({item}) => <FlightScreen item={item} />}
+          renderItem={({item}) => (
+            <FlightScreen item={item} screen={'HomeScreen'} />
+          )}
           keyExtractor={item => item.id}
         />
       )}

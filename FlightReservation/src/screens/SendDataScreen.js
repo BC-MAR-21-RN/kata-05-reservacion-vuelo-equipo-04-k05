@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet, Text} from 'react-native';
+import {View, TouchableOpacity, Text} from 'react-native';
 import CrossPlatformIcon from 'react-native-cross-platform-icons';
 import FlightScreen from './FlightScreen';
 import FormButton from '../components/FormButton';
 import database from '@react-native-firebase/database';
+import CreateReservationStyles from '../styles/CreateReservationStyles';
 
 export default function PassenScreen({route, navigation}) {
   const {
@@ -35,7 +36,7 @@ export default function PassenScreen({route, navigation}) {
       </TouchableOpacity>
 
       <View>
-        <FlightScreen item={id} />
+        <FlightScreen item={flightData} screen={'SendDataScreen'} />
       </View>
 
       <Text style={CreateReservationStyles.cuestion}>
@@ -49,15 +50,3 @@ export default function PassenScreen({route, navigation}) {
     </View>
   );
 }
-
-const CreateReservationStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    marginHorizontal: 30,
-  },
-  cuestion: {
-    fontWeight: 'bold',
-    fontSize: 36,
-  },
-});

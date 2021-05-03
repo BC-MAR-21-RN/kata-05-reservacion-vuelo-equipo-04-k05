@@ -1,31 +1,23 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import CrossPlatformIcon from 'react-native-cross-platform-icons';
 import FlightScreen from './FlightScreen';
 import FormButton from '../components/FormButton';
+import CreateReservationStyles from '../styles/CreateReservationStyles';
 import {Picker} from '@react-native-picker/picker';
-
-var cities = {
-  ny: 'Nueva York, USA',
-  was: 'Washington, USA',
-  ott: 'Ottawa, Canada',
-  tok: 'Tokio, Japan',
-  ber: 'Berlin, Germany',
-  lon: 'London, Kindom United',
-  mos: 'Moscú, Rusia',
-  mx: 'Mexico City, Mexico',
-};
+import {locations} from '../db/Locations';
 
 export default function LocOriginScreen({route, navigation}) {
   const {id, username, email} = route.params;
   const [selectedCity, setSelectedCity] = useState();
+  const item = {
+    id: id,
+    username: username,
+    email: email,
+    origin: selectedCity,
+  };
   const onPress = () => {
-    navigation.navigate('LocDestinationScreen', {
-      id: id,
-      username: username,
-      email: email,
-      origin: selectedCity,
-    });
+    navigation.navigate('LocDestinationScreen', item);
   };
   return (
     <View style={CreateReservationStyles.container}>
@@ -34,7 +26,7 @@ export default function LocOriginScreen({route, navigation}) {
       </TouchableOpacity>
 
       <View>
-        <FlightScreen item={id} />
+        <FlightScreen item={item} screen={'LocOriginScreen'} />
       </View>
 
       <Text style={CreateReservationStyles.cuestion}>Where are you now?</Text>
@@ -42,8 +34,8 @@ export default function LocOriginScreen({route, navigation}) {
       <Picker
         selectedValue={selectedCity}
         onValueChange={(itemValue, itemIndex) => setSelectedCity(itemValue)}>
-        {Object.keys(cities).map(key => {
-          return <Picker.Item label={cities[key]} value={key} key={key} />;
+        {locations.map((item, index) => {
+          return <Picker.Item label={item.name} value={item.key} key={index} />;
         })}
       </Picker>
 
@@ -51,15 +43,3 @@ export default function LocOriginScreen({route, navigation}) {
     </View>
   );
 }
-
-const CreateReservationStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    marginHorizontal: 30,
-  },
-  cuestion: {
-    fontWeight: 'bold',
-    fontSize: 36,
-  },
-});
